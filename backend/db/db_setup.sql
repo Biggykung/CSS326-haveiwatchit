@@ -1,3 +1,4 @@
+-- Active: 1787051386721@@127.0.0.1@3306@haveiwatchit
 
 CREATE DATABASE IF NOT EXISTS haveiwatchit
   CHARACTER SET utf8mb4
@@ -106,7 +107,7 @@ CREATE TABLE reviews (
   created_at   TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (user_id, show_id),
   CONSTRAINT fk_reviews_user  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-  CONSTRAINT fk_reviews_show  FOREIGN KEY (show_id) REFERENCES shows (id) ON DELETE CASCADE,
+  CONSTRAINT fk_reviews_show  FOREIGN KEY (show_id) REFERENCES shows (id) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE collections (
@@ -209,7 +210,7 @@ INSERT INTO show_submission (submitted_by, name, type, synopsis, other_details) 
  (4, 'Severance', 'series', 'Office workers have their memories surgically divided.', 'Streams on Apple TV+');
 
 
--- =====================================================================
+-- =====================================================================show_submissions
 -- PART 5 : SANITY CHECK (you should see a row count per table)
 -- =====================================================================
 SELECT 'haveiwatchit ready' AS status;
