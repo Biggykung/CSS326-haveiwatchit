@@ -37,17 +37,17 @@ export const authRegister = async (req, res) => {
     const token = generateToken(newUser.insertId);
     res.cookie('auth_token', token, cookieOptions)
 
-    return res.status(201).json({ userId: newUser.insertId });
+    return res.status(201).json({ user: { id: newUser.insertId, username, email} });
 }
 
 export const authLogin = async(req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!username || !password){
+    if (!email || !password){
         return res.status(400).json({ message: "Please provide all required fields! "});
     }
 
-    const [user] = await pool.query(`SELECT * FROM users WHERE username = ? OR email = ?`, [username, username]);
+    const [user] = await pool.execute(`SELECT * FROM users WHERE email = ?`, [email]);
     if (user.length === 0){
         return res.status(400).json({ message: "Invalid credentials"});
     }
@@ -67,7 +67,7 @@ export const authLogin = async(req, res) => {
 }
 
 export const authMe = async(req, res) => {
-    res.json(req.user);
+    res.json({user: req.user});
 }
 
 export const authLogout = async(req, res) => {
