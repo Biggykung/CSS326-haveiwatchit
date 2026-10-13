@@ -31,7 +31,7 @@ Backend is run via code below, Should be hosted on http://localhost:[your port :
 
 ```
 cd backend
-node servert.js
+node --watch server.js
 ```
 
 Front end is run via code below, Should be hosted on http://localhost:5173/
