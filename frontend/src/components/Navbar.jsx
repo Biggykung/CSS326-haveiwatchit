@@ -12,6 +12,7 @@ const UserAvatar = ({ username, iconClass, textClass }) =>
         <UserIcon className={iconClass} />
     );
 
+
 const UserMenu = ({ user, setUser }) => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
@@ -48,6 +49,21 @@ const UserMenu = ({ user, setUser }) => {
                     <span className="font-semibold mt-2"> {user ? user.username : "Guests"} </span>
                     <span className="font-light mt-1">{user ? user.role : "Not logged in"}</span>
                 </div>
+                {(user?.role === "admin") &&
+                     (
+                        <>
+                        <hr className="my-2 border-t-2 border-white/80" />
+                        <button
+                                    type="button"
+                                    role="menuitem"
+                                    onClick={() => {
+                                        navigate("/admin")
+                                    }}
+                                    className="w-full rounded-md bg-[#EFAC61] mt-2 mb-2 py-2 text-sm text-[#000000] transition font-semibold hover:bg-[#ec9532]"
+                                >Admin Page</button>
+                        </>
+                    )
+                }
                 <hr className="my-2 border-t-2 border-white/80" />
                 {user ? (
                     <button
@@ -265,23 +281,30 @@ const Navbar = ({ user, setUser }) => {
                 {/* Mobile panel */}
                 {mobileOpen && (
                     <div className="md:hidden mt-4 border-t border-white/10 pt-4">
-                        {/* Links: stacked, big tap targets */}
                         <nav className="flex flex-col">
                             {
                                 user? (
-                                      <span className="py-2 text-neutral-300 font-medium">
-                                        Logged in as <span className="text-[#EFAC61]">{user.username}</span>{" "}
-                                        (
-                                        <button
+                                      <div className="flex items-center w-full py-2 text-neutral-300 font-medium">
+                                        <span>
+                                            Logged in as <span className="text-[#EFAC61]">{user.username}</span>{" "}
+                                            (
+                                            <button
                                             type="button"
                                             onClick={handleLogout}
                                             className="underline hover:text-[#9596D6] transition-colors"
-                                        >
+                                            >
                                             Logout
-                                        </button>
-                                        )
-                                    </span>
-                                ): (
+                                            </button>
+                                            )
+                                        </span>
+
+                                        {user?.role === "admin" && (
+                                              <Link to="/admin" className="ml-auto underline hover:text-[#ff9100] transition-colors">
+                                                Admin Page
+                                            </Link>
+                                        )}
+                                        </div>
+                                    ): (
                                      <>
                                     <Link to="/login" onClick={() => setMobileOpen(false)} className="text-white hover:text-[#9596D6] hover:underline decoration-[#EFAC61] decoration-4 transition-all font-medium py-2">
                                         Login
@@ -298,7 +321,7 @@ const Navbar = ({ user, setUser }) => {
                             <a href="#collections" onClick={() => setMobileOpen(false)} className="text-white hover:text-[#9596D6] hover:underline decoration-[#EFAC61] decoration-4 transition-all font-medium py-2">Collections</a>
                         </nav>
 
-                        {/* Search bar (fills the row) + user menu on its right */}
+                        {/* Search bar */}
                         <div className="mt-4 flex items-center gap-3">
                             <div className="relative flex-1 search-container" onBlur={handleBlur}>
                                 <input
