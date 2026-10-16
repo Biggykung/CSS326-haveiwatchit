@@ -215,7 +215,7 @@ const Navbar = ({ user, setUser }) => {
   
 
     return (
-        <header className="flex w-full z-50 transition-all duration-300 bg-black/20 backdrop-blur-md rounded-b-2xl">
+        <header className="relative flex w-full z-50 transition-all duration-300 bg-black/20 backdrop-blur-md rounded-b-2xl">
             <div className="container mx-auto px-4 py-4">
                 {/* ===== Top row ===== */}
                 <div className="flex items-center justify-between">
