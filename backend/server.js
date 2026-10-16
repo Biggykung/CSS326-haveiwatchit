@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from 'cors';
 import authRoutes from "./routes/auth.js"
+import adminRoutes from "./routes/admin.js"
 import path from "path";
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use("/images", express.static(path.join(path.resolve(), "images")));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 
 // app.get("/", (req, res) => {
 //     res.send("This is home page!")
