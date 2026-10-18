@@ -21,7 +21,7 @@ const showToJson = (row) => ({
     id: Number(row.id),
     title: row.title,
     type: row.type,
-    sypnosis: row.sypnosis,
+    synopsis: row.synopsis,
     status: row.status,
     release_date: row.release_date,
     release_year: row.release_year,

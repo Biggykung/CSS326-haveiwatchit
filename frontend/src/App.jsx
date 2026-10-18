@@ -5,6 +5,7 @@ import AdminPage from "./pages/Admin";
 import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import ParallaxBackground from "./components/ParallaxBg";
+import LoadingPlaceHolder from "./components/LoadingScreen";
 import NotFound from "./components/NotFound";
 
 axios.defaults.withCredentials = true;
@@ -57,8 +58,10 @@ function App(){
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
-  }
+        return (
+            <LoadingPlaceHolder className="relative w-full h-screen bg-neutral-900"/>
+        );
+    }
 
   return (
     <Router>

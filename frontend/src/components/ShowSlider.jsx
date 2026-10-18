@@ -3,7 +3,7 @@ import { ChevronLeft as LeftArrow, ChevronRight as RightArrow, Star as StarIcon 
 
 function ShowSlider() {
     return(
-        <section className="py-12" id="">
+        <section className="py-12 relative z-10" id="">
             <div className="container mx-auto px-4">
                 <div className="flex items-baseline justify-between mb-8">
                     <div className="text-2xl md:text-3xl font-bold text-white">

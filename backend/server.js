@@ -9,6 +9,8 @@ dotenv.config();
 
 const app = express();
 
+// app.use((req, res, next) => setTimeout(next, 5000));
+
 app.use(cors({
     origin: process.env.CLIENT_URL || "http://localhost:5000",
     credentials: true,

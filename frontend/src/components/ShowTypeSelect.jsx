@@ -3,7 +3,7 @@ import { Star as StarIcon } from "lucide-react";
 
 function ShowTypeSelect() {
     return(
-        <section className="py-12 bg-neutral-900/50" id="">
+        <section className="py-12 bg-neutral-900/50 relative z-10" id="">
             <div className="container mx-auto px-4">
                 <h2 className="text-2xl md:text-3xl">Browse by Type</h2>
 

@@ -215,12 +215,12 @@ const Navbar = ({ user, setUser }) => {
   
 
     return (
-        <header className="relative flex w-full z-50 transition-all duration-300 bg-black/20 backdrop-blur-md rounded-b-2xl">
+        <header className="absolute inset-x-0 top-0 flex w-full z-50 transition-all duration-300 bg-gray-900/50 backdrop-blur-xl">
             <div className="container mx-auto px-4 py-4">
                 {/* ===== Top row ===== */}
                 <div className="flex items-center justify-between">
                     <a href="/" className="flex items-center">
-                        <span className="text-[#9596D6] font-bold text-2xl sm:text-3xl">
+                        <span className="text-[#9596D6] font-bold text-2xl sm:text-3xl inline-block bg-white/10 px-2 py-1 rounded-md backdrop-blue-xl">
                             HAVE<span className="text-[#EFAC61]">i</span>WATCH<span className="text-[#EFAC61]">it?</span>
                         </span>
                     </a>
