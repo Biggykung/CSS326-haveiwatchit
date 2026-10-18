@@ -15,8 +15,8 @@ function AppRoutes({ user, setUser, error }) {
 
   return (
     <>
-      {!isAdminPage && <Navbar user={user} setUser={setUser} />}
-      {!isAdminPage && <ParallaxBackground />}
+      <Navbar user={user} setUser={setUser} />
+      <ParallaxBackground hideCharacter={isAdminPage} />
       <Routes>
         <Route path="/" element={<HomePage user={user} error={error} />} />
         <Route

@@ -95,6 +95,8 @@ const entities = {
     },
 };
 
+const watchlistStatuses = ["wishlist", "watching", "watched", "rewatching", "on_hold", "dropped"];
+
 const getEntity = (name) => entities[name];
 
 const fieldMap = (entity) => new Map(entity.fields.map((item) => [item.name, item]));
@@ -302,6 +304,137 @@ export const getShowAssociations = async (req, res) => {
     } catch (error) {
         console.error("Admin show associations failed:", error);
         return res.status(500).json({ message: "Unable to load show details." });
+    }
+};
+
+const parsePositiveId = (value) => {
+    if (!/^\d+$/.test(String(value))) return null;
+    const id = Number(value);
+    return Number.isSafeInteger(id) && id > 0 ? id : null;
+};
+
+export const getUserWatchlist = async (req, res) => {
+    const userId = parsePositiveId(req.params.id);
+    if (!userId) {
+        return res.status(400).json({ message: "Invalid user ID." });
+    }
+
+    try {
+        const [[targetUser]] = await pool.execute(
+            "SELECT id, username FROM users WHERE id = ?",
+            [userId],
+        );
+        if (!targetUser) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const [items] = await pool.execute(
+            `SELECT item.show_id, item.status, item.updated_at,
+                    s.name, s.type, s.photo_url
+             FROM watchlist_items item
+             JOIN shows s ON s.id = item.show_id
+             WHERE item.user_id = ?
+             ORDER BY item.updated_at DESC, s.name`,
+            [userId],
+        );
+        const [availableShows] = await pool.execute(
+            `SELECT id, name, type, photo_url
+             FROM shows
+             WHERE id NOT IN (SELECT show_id FROM watchlist_items WHERE user_id = ?)
+             ORDER BY name
+             LIMIT 1000`,
+            [userId],
+        );
+
+        return res.json({
+            user: targetUser,
+            items,
+            availableShows,
+            statuses: watchlistStatuses,
+        });
+    } catch (error) {
+        console.error("Admin user watchlist load failed:", error);
+        return res.status(500).json({ message: "Unable to load this user's watchlist." });
+    }
+};
+
+export const addUserWatchlistItem = async (req, res) => {
+    const userId = parsePositiveId(req.params.id);
+    const showId = parsePositiveId(req.body?.show_id);
+    const status = req.body?.status ?? "wishlist";
+    if (!userId || !showId) {
+        return res.status(400).json({ message: "Valid user and show IDs are required." });
+    }
+    if (!watchlistStatuses.includes(status)) {
+        return res.status(400).json({ message: "Invalid watchlist status." });
+    }
+
+    try {
+        const [result] = await pool.execute(
+            "INSERT INTO watchlist_items (user_id, show_id, status) VALUES (?, ?, ?)",
+            [userId, showId, status],
+        );
+        if (!result.affectedRows) {
+            return res.status(500).json({ message: "Watchlist item was not added." });
+        }
+        return res.status(201).json({ message: "Show added to the user's watchlist." });
+    } catch (error) {
+        if (error.code === "ER_DUP_ENTRY") {
+            return res.status(409).json({ message: "This show is already on the user's watchlist." });
+        }
+        if (error.code === "ER_NO_REFERENCED_ROW_2") {
+            return res.status(404).json({ message: "User or show not found." });
+        }
+        console.error("Admin user watchlist add failed:", error);
+        return res.status(500).json({ message: "Unable to add this show to the watchlist." });
+    }
+};
+
+export const updateUserWatchlistItem = async (req, res) => {
+    const userId = parsePositiveId(req.params.id);
+    const showId = parsePositiveId(req.params.showId);
+    const status = req.body?.status;
+    if (!userId || !showId) {
+        return res.status(400).json({ message: "Valid user and show IDs are required." });
+    }
+    if (!watchlistStatuses.includes(status)) {
+        return res.status(400).json({ message: "Invalid watchlist status." });
+    }
+
+    try {
+        const [result] = await pool.execute(
+            "UPDATE watchlist_items SET status = ? WHERE user_id = ? AND show_id = ?",
+            [status, userId, showId],
+        );
+        if (!result.affectedRows) {
+            return res.status(404).json({ message: "Watchlist item not found." });
+        }
+        return res.json({ message: "Watchlist status updated." });
+    } catch (error) {
+        console.error("Admin user watchlist update failed:", error);
+        return res.status(500).json({ message: "Unable to update this watchlist item." });
+    }
+};
+
+export const deleteUserWatchlistItem = async (req, res) => {
+    const userId = parsePositiveId(req.params.id);
+    const showId = parsePositiveId(req.params.showId);
+    if (!userId || !showId) {
+        return res.status(400).json({ message: "Valid user and show IDs are required." });
+    }
+
+    try {
+        const [result] = await pool.execute(
+            "DELETE FROM watchlist_items WHERE user_id = ? AND show_id = ?",
+            [userId, showId],
+        );
+        if (!result.affectedRows) {
+            return res.status(404).json({ message: "Watchlist item not found." });
+        }
+        return res.json({ message: "Show removed from the user's watchlist." });
+    } catch (error) {
+        console.error("Admin user watchlist delete failed:", error);
+        return res.status(500).json({ message: "Unable to remove this watchlist item." });
     }
 };
 
