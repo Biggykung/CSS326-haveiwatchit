@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 const Login = ({ setUser }) => {
 const [form, setForm] = useState({
@@ -19,7 +20,7 @@ const handleSubmit = async (e) => {
         const res = await axios.post("/api/auth/login", form);
         setUser(res.data.user);
         navigate("/");
-    } catch (err) {
+    } catch {
         setError("Invalid email or password");
     }
 };
@@ -27,9 +28,17 @@ const handleSubmit = async (e) => {
 return (
     <div className="min-h-[80vh] flex items-center justify-center p-4 pt-20 bg-gradient-to-b from-[#1A1A1A] to-[#0D0D0D]">
         <form
-            className="bg-white p-8 rounded-xl shadow-xl shadow-blue-500/20 w-full max-w-md text-center"
+            className="relative bg-white p-8 rounded-xl shadow-xl shadow-blue-500/20 w-full max-w-md text-center"
             onSubmit={handleSubmit}
         >
+            <button
+                type="button"
+                onClick={() => navigate(-1)}
+                aria-label="Go back"
+                className="absolute left-4 top-4 rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-800"
+            >
+                <ArrowLeft className="h-5 w-5" />
+            </button>
             <h2 className="text-3xl mb-2 font-bold text-gray-800">
                 Welcome Back
             </h2>
