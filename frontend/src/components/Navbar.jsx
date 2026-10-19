@@ -227,9 +227,9 @@ const Navbar = ({ user, setUser }) => {
 
                     {/* Desktop nav */}
                     <nav className="hidden md:flex space-x-8">
-                        <a href="#" className={"text-white hover:text-[#9596D6] hover:underline decoration-[#EFAC61] decoration-4 transition-all font-medium"}>Home</a>
-                        <a href="#watchlist" className={"text-white hover:text-[#9596D6] hover:underline decoration-[#EFAC61] decoration-4 transition-all font-medium"}>Watchlist</a>
-                        <a href="#collections" className={"text-white hover:text-[#9596D6] hover:underline decoration-[#EFAC61] decoration-4 transition-all font-medium"}>Collections</a>
+                        <Link to="/" className={"text-white hover:text-[#9596D6] hover:underline decoration-[#EFAC61] decoration-4 transition-all font-medium"}>Home</Link>
+                        <Link to="/watchlist" className={"text-white hover:text-[#9596D6] hover:underline decoration-[#EFAC61] decoration-4 transition-all font-medium"}>Watchlist</Link>
+                        <Link to="/collections" className={"text-white hover:text-[#9596D6] hover:underline decoration-[#EFAC61] decoration-4 transition-all font-medium"}>Collections</Link>
                     </nav>
 
                     {/* Desktop: search */}
