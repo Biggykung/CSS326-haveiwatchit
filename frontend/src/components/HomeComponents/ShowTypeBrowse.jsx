@@ -2,6 +2,14 @@ import React from "react";
 import { Star as StarIcon } from "lucide-react";
 
 function ShowTypeSelect() {
+    const showType = [
+        { value: "movies", "title": "Movies" },
+        { value: "series", "title": "Series" },
+        { value: "tv_shows", "title": "TV Shows" },
+        
+    ]
+
+
     return(
         <section className="py-12 bg-neutral-900/50 relative z-10" id="">
             <div className="container mx-auto px-4">

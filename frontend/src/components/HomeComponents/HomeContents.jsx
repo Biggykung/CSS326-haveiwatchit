@@ -1,11 +1,11 @@
 import { useEffect, useState} from "react";
 import axios from "axios";
-import HeroSection from "./HeroSection";
-import ShowSlider from "./ShowSlider";
-import ShowTypeSelect from "./ShowTypeSelect";
-import LoadingPlaceHolder from "./LoadingScreen";
+import HeroUI from "../HomeComponents/HeroUI";
+import ShowSlider from "../HomeComponents/ShowSlider";
+import ShowTypeSelect from "../HomeComponents/ShowTypeBrowse";
+import LoadingPlaceHolder from "../LoadingScreen";
 
-function ShowContent(){
+function HomeContent(){
     const [featured, setFeatured] = useState([]);
     const [topRated, setTopRated] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -32,6 +32,7 @@ function ShowContent(){
 
             setLoading(false);
             console.log(randoms);
+            console.log("toprated")
             console.log(toprated);
         };
 
@@ -49,7 +50,7 @@ function ShowContent(){
         <>
             <img src="https://puppiizsunniiz.github.io/Arknight-Images/characters/char_124_kroos_sale%2314_sp.png" alt="" aria-hidden="true"
             className="fixed -bottom-75 -left-64 z-0 w-4xl md:w-5xl pointer-events-none select-none opacity-10" />
-            <HeroSection shows={featured} loading = {loading} />
+            <HeroUI shows={featured} loading = {loading} />
             <div className="bg-linear-to-b from-neutral-900 to-neutral-950">
                 <ShowSlider 
                     title="Top Rated"
@@ -63,4 +64,4 @@ function ShowContent(){
     )
 }
 
-export default ShowContent
+export default HomeContent

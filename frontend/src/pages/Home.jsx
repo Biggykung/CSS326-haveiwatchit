@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
-import HeroSection from "../components/HeroSection";
-import ShowSlider from "../components/ShowSlider";
-import ShowContent from "../components/ShowContent";
+import HomeContent from "../components/HomeComponents/HomeContents";
 
 const Home = ({user, error}) => {
     return (
     <>
     <main>
-        <ShowContent />
+        <HomeContent />
     </main>
     </>
     )

@@ -4,7 +4,7 @@ import { Star as StarIcon, Clapperboard as ClapperBoardIcon, SquarePlus as AddWa
 
 const AUTOMOVE_MS = 10000; // 10 sec
 
-function HeroSection( { shows =[], loading = false }) {
+function HeroUI( { shows =[], loading = false }) {
     const navigate = useNavigate()
     const [showIndex, setShowIndex] = useState(0);
 
@@ -106,4 +106,4 @@ function HeroSection( { shows =[], loading = false }) {
     </div>
     )}
 
-export default HeroSection;
+export default HeroUI;

@@ -182,7 +182,7 @@ export const getTopShows = wrapper("Unable to fetch top rated shows", async(req,
 
     // You ain't ready for this monstrosity trust me
     const weighted_query = `
-    SELECT  s.id, s.name AS title, s.synopsis, s.status, s.type
+    SELECT  s.id, s.name AS title, s.synopsis, s.status, s.type,
             DATE_FORMAT(s.release_date, '%d-%m-%Y') AS release_date,
             YEAR(s.release_date) AS release_year,
             s.episode_count, s.duration, s.content_rating, s.photo_url, s.cover_url,
