@@ -4,23 +4,32 @@ import cookieParser from "cookie-parser";
 import cors from 'cors';
 import { adminRoute, authRoute, showsRoute } from "./routes/routes.js";
 import path from "path";
-import fs from "fs";
 
 dotenv.config();
 
 const app = express();
 
 // app.use((req, res, next) => setTimeout(next, 5000));
-const frontendPath = path.resolve("../frontend/dist");
 
-app.use(express.static(frontendPath));
+app.use(cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5000",
+    credentials: true,
+}))
+app.use(express.json());
+app.use(cookieParser());
 
-app.get("/{*path}", (req, res, next) => {
-    if (req.path.startsWith("/api/")) {
-        return next();
-    }
+app.use("/images", express.static(path.join(path.resolve(), "images")));
 
-    res.sendFile(path.join(frontendPath, "index.html"));
+app.use('/api/auth', authRoute);
+app.use('/api/admin', adminRoute);
+app.use('/api/shows', showsRoute);
+
+// app.get("/", (req, res) => {
+//     res.send("This is home page!")
+// })
+
+app.get("/", (req, res) => {
+    res.send("This is haveiwatchit home api!")
 });
 
 const PORT = process.env.PORT || 5000;

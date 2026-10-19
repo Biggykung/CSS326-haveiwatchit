@@ -32,8 +32,8 @@ const UserMenu = ({ user, setUser }) => {
                 aria-expanded={open}
                 aria-label="userMenu"
                 className="flex h-10 w-10 items-center justify-center rounded-full
-                   border border-white/10 bg-[#1b1b20] text-white transition
-                   hover:bg-[#25252c]"
+                    border border-white/10 bg-[#1b1b20] text-white transition
+                    hover:bg-[#25252c]"
             >
                 <UserAvatar username={user?.username} iconClass="h-5 w-5" textClass="text-3xl" />
             </button>
@@ -50,14 +50,15 @@ const UserMenu = ({ user, setUser }) => {
                     <span className="font-light mt-1">{user ? user.role : "Not logged in"}</span>
                 </div>
                 {(user?.role === "admin") &&
-                     (
+                    (
                         <>
                         <hr className="my-2 border-t-2 border-white/80" />
                         <button
                                     type="button"
                                     role="menuitem"
                                     onClick={() => {
-                                        navigate("/admin")
+                                        navigate("/admin");
+                                        setOpen(false);
                                     }}
                                     className="w-full rounded-md bg-[#EFAC61] mt-2 mb-2 py-2 text-sm text-[#000000] transition font-semibold hover:bg-[#ec9532]"
                                 >Admin Page</button>
