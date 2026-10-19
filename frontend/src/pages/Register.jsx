@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Register = ({ setUser }) => {
-
     const [form, setForm] = useState({
         username: "",
         email: "",
