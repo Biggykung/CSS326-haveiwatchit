@@ -28,7 +28,7 @@ const Register = ({ setUser }) => {
     };
 
     return (
-        <div className="min-h-[80vh] flex items-center justify-center p-4">
+        <div className="min-h-[80vh] flex items-center justify-center p-4 pt-20 bg-gradient-to-b from-[#1A1A1A] to-[#0D0D0D]">
             <form
                 onSubmit={handleSubmit}
                 className="bg-white p-8 rounded-xl shadow-xl shadow-blue-500/20 w-full max-w-md text-center"
