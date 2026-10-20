@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "r
 import axios from "axios";
 import { HomePage, LoginPage, RegisterPage } from "./pages/PageIndex";
 import AdminPage from "./pages/Admin";
+import WatchlistPage from "./pages/Watchlist";
 import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import ParallaxBackground from "./components/ParallaxBg";
@@ -20,6 +21,7 @@ function AppRoutes({ user, setUser, error }) {
       <ParallaxBackground hideCharacter={isAdminPage} />
       <Routes>
         <Route path="/" element={<HomePage user={user} error={error} />} />
+        <Route path="/watchlist" element={<WatchlistPage user={user} />} />
         <Route
           path="/login"
           element={user ? <Navigate to="/" /> : <LoginPage setUser={setUser} />}

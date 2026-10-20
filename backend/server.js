@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from 'cors';
 import { adminRoute, authRoute, showsRoute } from "./routes/routes.js";
+import watchlistRoute from "./routes/watchlist.js";
 import path from "path";
 
 dotenv.config();
@@ -23,6 +24,7 @@ app.use("/images", express.static(path.join(path.resolve(), "images")));
 app.use('/api/auth', authRoute);
 app.use('/api/admin', adminRoute);
 app.use('/api/shows', showsRoute);
+app.use('/api/watchlist', watchlistRoute);
 
 // app.get("/", (req, res) => {
 //     res.send("This is home page!")
